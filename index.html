@@ -1,0 +1,525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Documento sin título</title>
+</head>
+<style>
+/* Estilos para el encabezado simplificado */
+.simple-header {
+    width: 100%;
+    background-color: #fff; /* Fondo blanco */
+    border-bottom: 1px solid #eee; /* Línea divisoria inferior suave */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra sutil */
+    padding: 15px 50px; /* Espaciado interno */
+    display: flex; /* Para alinear el logo, nav y carrito */
+    justify-content: space-between; /* Espacia los elementos */
+    align-items: center; /* Centra verticalmente */
+    max-width: 1200px; /* Ancho máximo para el contenido, puedes ajustar */
+    margin: 0 auto; /* Centra el header en la página */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+/* Nombre de la compañía */
+.company-name {
+    font-family: Arial, sans-serif; /* Puedes usar 'Arial Black' o una fuente más decorativa si deseas */
+    font-size: 32px;
+    font-weight: bold;
+    color: #333; /* Color oscuro para el texto */
+    letter-spacing: 1px;
+}
+
+/* Navegación simplificada */
+.simple-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 40px; /* Espacio entre los enlaces */
+}
+
+.simple-nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.simple-nav ul li a:hover {
+	color: #000000; /* Color al pasar el ratón, como en los ejemplos anteriores */
+}
+
+.simple-nav ul li a.active-link {
+    color: #ff0000; /* Color para el enlace "Ordena Aquí" activo */
+    border-bottom: 2px solid #ff0000; /* Subrayado para el enlace activo */
+    padding-bottom: 2px;
+}
+
+/* Ícono del carrito simplificado */
+.simple-cart-icon {
+    position: relative; /* Para posicionar el número 0 */
+}
+
+.simple-cart-icon img {
+    width: 30px; /* Tamaño del icono del carrito */
+    height: auto;
+    vertical-align: middle;
+}
+
+.simple-cart-icon span {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #ff0000; /* Color rojo para el círculo del 0 */
+    color: white;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+/* Media Queries para adaptabilidad en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .simple-header {
+        flex-direction: column; /* Apila los elementos en pantallas pequeñas */
+        text-align: center;
+        padding: 15px 20px;
+    }
+
+    .company-name {
+        margin-bottom: 15px;
+    }
+
+    .simple-nav ul {
+        flex-wrap: wrap; /* Permite que los enlaces se envuelvan */
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+
+    .simple-cart-icon {
+        margin-top: 10px;
+    }
+}
+/* Sección de Productos */
+.products-section {
+    max-width: 1200px; /* Ancho máximo similar al resto del contenido */
+    margin: 50px auto; /* Espacio arriba/abajo y centrado */
+    padding: 0 20px;
+}
+
+/* Contenedor de la cuadrícula de productos */
+.products-grid {
+    display: grid;
+    /* 3 columnas que se adaptan, mínimo 300px, fracción del espacio */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px; /* Espacio entre las tarjetas de producto */
+}
+
+/* Estilos para cada tarjeta de producto */
+.product-card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden; /* Para que la imagen no se salga de las esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de la imagen del producto */
+.product-image-container {
+    width: 100%;
+    height: 200px; /* Altura fija para las imágenes */
+    overflow: hidden; /* Recorta la imagen si es demasiado grande */
+    display: flex; /* Para centrar la imagen */
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8; /* Fondo claro si la imagen no llena */
+}
+
+.product-image-container img {
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho */
+    height: 100%; /* Asegura que la imagen ocupe toda la altura */
+    object-fit: cover; /* Recorta la imagen para que cubra el contenedor sin distorsión */
+}
+
+/* Información del producto (nombre y precio) */
+.product-info {
+    padding: 15px 20px;
+    text-align: center;
+    flex-grow: 1; /* Permite que esta sección ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente nombre y precio */
+}
+
+.product-info h3 {
+    font-size: 20px;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.product-info .product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555; /* Color del precio, puedes ajustar a tu paleta */
+}
+
+/* Estilos del botón "AGREGAR" */
+.add-to-cart-btn {
+    background-color: #a04058; /* Color similar al burdeos del encabezado de El Globo */
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 0 0 8px 8px; /* Solo esquinas inferiores redondeadas */
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Espacio entre texto y icono */
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #85354a; /* Color más oscuro al pasar el ratón */
+}
+
+.add-to-cart-btn img {
+    width: 18px; /* Tamaño del icono dentro del botón */
+    height: auto;
+    filter: brightness(0) invert(1); /* Si el icono es negro, lo hace blanco */
+}
+
+/* Media Queries para adaptabilidad en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .products-section {
+        padding: 0 15px;
+    }
+    .products-grid {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+}
+.A {
+	font-size: 50px;
+	text-align: center;
+	font-family: "Times New Roman", Times, serif;
+}
+
+/* Estilos generales del footer */
+.main-footer {
+    width: 100%;
+    box-sizing: border-box; /* Incluye padding en el ancho */
+}
+
+/* Sección superior del footer (los íconos) */
+.footer-top-icons {
+    background-color: #a07a52; /* Color marrón claro */
+    padding: 30px 20px;
+    display: flex;
+    justify-content: space-around; /* Espacia los íconos uniformemente */
+    align-items: center;
+    flex-wrap: wrap; /* Permite que los íconos se envuelvan en pantallas pequeñas */
+    gap: 20px; /* Espacio entre los elementos de ícono */
+    max-width: 1510px; /* Ancho máximo para el contenido */
+    margin: 0 auto; /* Centra el contenido */
+}
+
+.footer-icon-item {
+    text-align: center;
+    color: #fff; /* Texto blanco */
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    flex: 1; /* Permite que los items crezcan y se encojan */
+    min-width: 150px; /* Ancho mínimo para cada ítem */
+}
+
+.footer-icon-item img {
+    width: 40px; /* Tamaño de los íconos */
+    height: auto;
+    margin-bottom: 10px;
+    filter: brightness(0) invert(1); /* Convierte íconos negros a blancos */
+}
+
+/* Sección principal del footer (columnas de enlaces) */
+.footer-main-columns {
+    background-color: #4a212e; /* Color granate/marrón oscuro */
+    color: #fff;
+    padding: 40px 50px; /* Espaciado interno */
+    display: grid; /* Usamos Grid para las columnas */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas que se adaptan */
+    gap: 30px; /* Espacio entre columnas */
+    max-width: 1510px; /* Ancho máximo para el contenido */
+    margin: 0 auto; /* Centra el contenido */
+}
+
+.footer-column {
+    /* flex: 1; min-width: 180px; */ /* Si usaras flexbox en lugar de grid */
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Línea debajo del título */
+    padding-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    text-decoration: none;
+    color: #ccc; /* Color más claro para los enlaces */
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #fff; /* Enlaces blancos al pasar el ratón */
+}
+
+/* Columna de redes sociales */
+.social-column .social-icons {
+    display: flex;
+    gap: 15px; /* Espacio entre íconos de redes sociales */
+    margin-top: 10px;
+}
+
+.social-icons img {
+    width: 25px; /* Tamaño de los íconos de redes */
+    height: auto;
+    filter: brightness(0) invert(1); /* Convierte íconos negros a blancos */
+}
+
+/* Media Queries para adaptabilidad en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .footer-top-icons {
+        flex-direction: column; /* Apila los íconos */
+        padding: 20px;
+        gap: 25px;
+    }
+
+    .footer-main-columns {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+        padding: 30px 20px;
+        text-align: center; /* Centra el texto */
+    }
+
+    .footer-column h3 {
+        margin-bottom: 15px;
+        border-bottom: none; /* Quita el borde si no se ve bien centrado */
+        padding-bottom: 0;
+    }
+
+    .footer-column ul {
+        margin-bottom: 20px; /* Espacio entre listas apiladas */
+    }
+
+    .social-column .social-icons {
+        justify-content: center; /* Centra los íconos sociales */
+    }
+}
+
+</style>
+<body>
+<header class="simple-header">
+    <div class="company-name">El Globo</div>
+    <nav class="simple-nav">
+        <ul>
+            <li><a href="index.html">Menú</a></li>
+            <li><a href="Untitled-1.html" class="simple-nav">Ordena Aquí</a></li></ul></nav>
+    <div class="simple-cart-icon">
+        <a href="Untitled-1.html">
+            <img src="I/symbole-charrette-gris.png" alt="Carrito de Compras">
+            <span>0</span>
+        </a>
+    </div>
+</header>
+<img src="I/Inicio.jpg" width="1505" height="402" />
+<p class="A">Panaderia</p>
+<hr />
+<section class="products-section">
+    <div class="products-grid">
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Dona Salon.jpg" alt="Dona Salón">
+            </div>
+            <div class="product-info">
+                <h3>Dona Salón</h3>
+                <span class="product-price">$35</span>
+            </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a><img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Garibaldi.jpg" alt="Garibaldi">
+            </div>
+            <div class="product-info">
+                <h3>Garibaldi</h3>
+                <span class="product-price">$29</span>
+            </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a><img src="I/symbole-charrette-gris.png" alt="Carrito"> 
+            </button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Chocolatin.jpg" alt="Chocolatín">
+            </div>
+            <div class="product-info">
+                <h3>Chocolatín</h3>
+                <span class="product-price">$35</span>
+            </div>
+            <button class="add-to-cart-btn">
+               <a href="Untitled-1.html" class="simple-nav">AGREGAR</a><img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+        </div>
+        
+<div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Dona Chocolate con Almendras.jpg" alt="Dona Salón">
+            </div>
+      <div class="product-info">
+                      <h3>Dona de Chocolate con Almedras</h3>
+          <span class="product-price">$35</span>
+            </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a><img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+      </div>
+<div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Concha Chocolate.jpg" alt="Dona Salón">
+            </div>
+      <div class="product-info">
+                      <h3>Concha de Chocolate</h3>
+          <span class="product-price">$29</span>
+      </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a><img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+      </div>
+<div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Dona Chocolate.jpg" alt="Dona Salón">
+            </div>
+      <div class="product-info">
+                      <h3>Dona de Chocolate</h3>
+          <span class="product-price">$32</span>
+      </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a> <img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+      </div>
+<div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Dona Moka.jpg" alt="Dona Salón">
+            </div>
+      <div class="product-info">
+        <h3>Dona Moka</h3>
+          <span class="product-price">$32</span>
+      </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a> <img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+      </div>
+<div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Cuerno.jpg" alt="Dona Salón">
+            </div>
+      <div class="product-info">
+        <h3>Cuerno</h3>
+          <span class="product-price">$29</span>
+      </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a> <img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+      </div>
+<div class="product-card">
+            <div class="product-image-container">
+                <img src="I/Croissant.jpg" alt="Dona Salón">
+            </div>
+      <div class="product-info">
+        <h3>Croiassant</h3>
+          <span class="product-price">$35</span>
+      </div>
+            <button class="add-to-cart-btn">
+                <a href="Untitled-1.html" class="simple-nav">AGREGAR</a> <img src="I/symbole-charrette-gris.png" alt="Carrito">
+            </button>
+      </div>
+  </div>
+</section>
+<header class="main-header">
+  <nav class="main-nav"> </nav>
+</header>
+<footer class="main-footer">
+    <div class="footer-top-icons">
+        <div class="footer-icon-item"><span>PICK UP EN TIENDA</span>
+        </div>
+        <div class="footer-icon-item"><span>GARANTÍA DE SATISFACCIÓN</span>
+        </div>
+        <div class="footer-icon-item"><span>SERVICIO AL CLIENTE</span>
+        </div>
+        <div class="footer-icon-item"><span>PAGO SEGURO</span>
+        </div>
+    </div>
+
+  <div class="footer-main-columns">
+        <div class="footer-column">
+            <h3>EL GLOBO</h3>
+            <ul>
+                <li><a href="#">Eventos Especiales</a></li>
+                <li><a href="#">Bolsa de Trabajo</a></li>
+                <li><a href="#">Uber Eats</a></li>
+                <li><a href="#">Rappi</a></li>
+                <li><a href="#">Didi</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>INVITADOS</h3>
+            <ul>
+                <li><a href="#">Mi cuenta</a></li>
+                <li><a href="#">Facturación</a></li>
+                <li><a href="#">Atención a Clientes</a></li>
+                <li><a href="#">Invitado Consentido</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>LEGALES</h3>
+            <ul>
+                <li><a href="#">Aviso de Privacidad</a></li>
+                <li><a href="#">Términos y Condiciones</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
